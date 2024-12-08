@@ -1,0 +1,118 @@
+:root {
+  --main-background: rgb(29, 29, 29);
+  --main-color: white;
+  --off-color: rgb(190, 190, 190);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: var(--main-color);
+  text-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgb(38, 102, 104), var(--main-background));
+}
+
+/* nav */
+
+nav, nav * {
+  background-color: black;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+nav * {
+  text-decoration: none;
+  list-style: none;
+}
+
+/* main content */
+
+article {
+  font-weight: 550;
+  padding: 2rem 10vw;
+}
+
+@media screen and (max-width: 800px) {
+  article {
+    padding: 2rem;
+  }
+}
+
+/* banner */
+
+.banner {
+  vertical-align: middle;
+  padding-bottom: 2rem;
+}
+
+.banner > img {
+  margin-right: 2rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.banner > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.banner-release {
+  font-size: 1.6rem;
+}
+
+.banner-artists {
+  font-size: 1.3rem;
+}
+
+/* controls-bar */
+
+/* track-list */
+
+.track-list > ul {
+  list-style: none;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  padding: 0.8em 2rem;
+}
+
+.track:hover {
+  background: linear-gradient(0.25turn, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+}
+
+.track-details {
+  flex: 1 0;
+}
+
+.track-title {
+  font-size: 1.3rem;
+}
+
+.track-title > * {
+  padding-right: 0.5em;
+}
+
+.track-artists {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--off-color)
+}
+
+.track-length {
+  font-size: 1.1rem;
+}

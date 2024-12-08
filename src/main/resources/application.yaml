@@ -1,0 +1,7 @@
+ktor:
+    application:
+        modules:
+            - com.AppKt.module
+    development: true
+    deployment:
+        port: 8080
