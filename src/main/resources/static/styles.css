@@ -1,7 +1,9 @@
 :root {
-  --main-background: rgb(29, 29, 29);
+  --main-background: rgb(32, 32, 32);
   --main-color: white;
-  --off-color: rgb(190, 190, 190);
+  --off-color: rgb(231, 231, 231);
+  --deemphasized-color: rgb(190, 190, 190);
+  --highlight-color: rgb(78, 224, 78);
 }
 
 * {
@@ -13,10 +15,16 @@
   text-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
 }
 
+html {
+  background: linear-gradient(rgb(195, 255, 116), var(--main-background) 40rem), url("/noise.png");
+  background-attachment: fixed;
+  background-blend-mode: multiply;
+  background-size: 350px;
+}
+
 html, body {
   width: 100%;
-  height: 100%;
-  background: linear-gradient(rgb(38, 102, 104), var(--main-background));
+  min-height: 100%;
 }
 
 /* nav */
@@ -26,6 +34,9 @@ nav, nav * {
 }
 
 nav {
+  position: fixed;
+  width: 100%;
+
   display: flex;
   justify-content: center;
 
@@ -38,16 +49,20 @@ nav * {
   list-style: none;
 }
 
+nav *:hover {
+  color: var(--highlight-color);
+}
+
 /* main content */
 
 article {
   font-weight: 550;
-  padding: 2rem 10vw;
+  padding: 5rem 10vw 2rem;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 820px) {
   article {
-    padding: 2rem;
+    padding: 4.5rem 2rem 2rem;
   }
 }
 
@@ -55,13 +70,18 @@ article {
 
 .banner {
   vertical-align: middle;
-  padding-bottom: 2rem;
 }
 
 .banner > img {
   margin-right: 2rem;
   max-width: 100%;
   height: auto;
+  margin-bottom: 0.6rem;
+}
+
+.banner > img:empty {
+  background-color: black;
+  text-align: center;
 }
 
 .banner > * {
@@ -71,13 +91,43 @@ article {
 
 .banner-release {
   font-size: 1.6rem;
+  white-space: nowrap;
 }
 
 .banner-artists {
   font-size: 1.3rem;
+  white-space: nowrap;
 }
 
 /* controls-bar */
+
+.controls-bar {
+  margin-top: 0.6rem;
+  padding-bottom: 1rem;
+}
+
+.play-button {
+  background-color: green;
+  border-radius: 100em;
+  border: 0;
+  padding: 1.2em;
+  display: flex;
+}
+
+.play-button:hover {
+  background-color: rgb(0, 117, 0);
+  cursor: pointer;
+}
+
+.play-icon {
+  width: 1.8em;
+  height: 1.8em;
+  filter: invert(95%) drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.2));
+}
+
+.play-icon-play {
+  transform: translateX(0.13em);
+}
 
 /* track-list */
 
@@ -89,30 +139,46 @@ article {
   display: flex;
   align-items: center;
   padding: 0.8em 2rem;
+
+  border: solid;
+  border-image: linear-gradient(0.25turn, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.1)) 1;
+  border-width: 1.5px 0 0 0;
 }
 
 .track:hover {
   background: linear-gradient(0.25turn, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+  backdrop-filter: blur(15px);
+  cursor: pointer;
+}
+
+.track.selected {
+  background: linear-gradient(0.25turn, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  backdrop-filter: blur(15px);
 }
 
 .track-details {
-  flex: 1 0;
+  flex: 1 1;
+  white-space: nowrap;
+  overflow: hidden;
+  mask-image: linear-gradient(0.25turn, white 70%, rgba(255, 255, 255, 0));
 }
 
-.track-title {
+.track-number-title {
   font-size: 1.3rem;
 }
 
-.track-title > * {
-  padding-right: 0.5em;
+.track.playing .track-number-title, .track.playing .track-title {
+  color: var(--highlight-color);
 }
 
 .track-artists {
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--off-color)
+  color: var(--deemphasized-color)
 }
 
 .track-length {
+  flex: 0 0;
+  text-align: end;
   font-size: 1.1rem;
 }

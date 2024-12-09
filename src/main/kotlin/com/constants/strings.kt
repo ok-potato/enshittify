@@ -1,3 +1,5 @@
 package com.constants
 
-val companyBrand = "Enshittify™"
+const val companyBrand = "Enshittify™"
+const val unknownRelease = "Unknown Release"
+const val unknownArtist = "Unknown Artist"
