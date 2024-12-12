@@ -69,7 +69,7 @@ fun HTML.releasePage(releaseId: String, releaseInfo: ReleaseInfo) {
     }
     body {
         navbar()
-        article {
+        article(classes = "release-content") {
             section(classes = "banner") {
                 img {
                     alt = releaseInfo.title ?: unknownRelease
@@ -93,7 +93,7 @@ fun HTML.releasePage(releaseId: String, releaseInfo: ReleaseInfo) {
             }
             section(classes = "track-list") {
                 ul {
-                    releaseInfo.tracks.forEachIndexed() { idx, track ->
+                    releaseInfo.tracks.forEachIndexed { idx, track ->
                         val trackNr = idx + 1
 
                         li(classes = "track") {
