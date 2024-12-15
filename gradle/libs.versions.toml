@@ -1,8 +1,8 @@
-
 [versions]
 kotlin-version = "2.1.0"
 ktor-version = "3.0.2"
 logback-version = "1.4.14"
+jave-version = "3.5.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
@@ -15,9 +15,11 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 server-config-yaml = { module = "io.ktor:ktor-server-config-yaml-jvm", version.ref = "ktor-version" }
 server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
 server-host-common = { module = "io.ktor:ktor-server-host-common-jvm", version.ref = "ktor-version" }
-server-html-builder = { module="io.ktor:ktor-server-html-builder", version.ref = "kotlin-version" }
+server-html-builder = { module = "io.ktor:ktor-server-html-builder", version.ref = "kotlin-version" }
 server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor-version" }
 server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-version" }
 server-thymeleaf = { module = "io.ktor:ktor-server-thymeleaf-jvm", version.ref = "ktor-version" }
-moshi = { module = "com.squareup.moshi:moshi-kotlin", version = "1.15.2"}
+moshi = { module = "com.squareup.moshi:moshi-kotlin", version = "1.15.2" }
 server-statuspages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor-version" }
+jave = { module = "ws.schild:jave-core", version.ref = "jave-version" }
+jave-native-win = { module = "ws.schild:jave-nativebin-win64", version.ref = "jave-version" }

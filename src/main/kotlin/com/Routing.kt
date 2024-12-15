@@ -13,6 +13,7 @@ import java.io.File
 
 const val resourcesBasePath = "src/main/resources"
 const val releasesBasePath = "$resourcesBasePath/releases"
+const val releaseBaseUrl = "release"
 val notFoundPage = File("$resourcesBasePath/404.html").readText()
 
 fun Application.configureRouting() {
@@ -34,21 +35,27 @@ fun Application.configureRouting() {
             call.respondHtml { feedPage(allReleaseInfo) }
         }
 
-        get("/release/{id}") {
+        get("/$releaseBaseUrl/{id}") {
             val releaseId = call.parameters["id"]!!
             val releaseInfo = fetchReleaseInfo(releaseId)
             call.respondHtml { releasePage(releaseId, releaseInfo) }
         }
 
-        get("/release/{id}/cover.jpg") {
+        get("/$releaseBaseUrl/{id}/cover.jpg") {
             val releaseId = call.parameters["id"]!!
             call.respondFile(fetchCover(releaseId))
         }
 
-        get("/release/{id}/{trackNr}") {
+        get("/$releaseBaseUrl/{id}/{trackNr}") {
             val releaseId = call.parameters["id"]!!
             val trackNr = call.parameters["trackNr"]!!.toInt()
             call.respondFile(fetchTrack(releaseId, trackNr))
+        }
+
+        post("/upload") {
+            // TODO failure case
+            val releasePageUrl = call.receiveMultipart().uploadRelease()
+            call.respondRedirect(releasePageUrl)
         }
 
     }

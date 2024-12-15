@@ -32,4 +32,6 @@ dependencies {
 
     implementation(libs.logback.classic)
     implementation(libs.moshi)
+    implementation(libs.jave)
+    implementation(libs.jave.native.win)
 }

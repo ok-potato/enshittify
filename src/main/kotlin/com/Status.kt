@@ -12,6 +12,7 @@ fun Application.handleStatuses() {
             call.response.status(HttpStatusCode.NotFound)
         }
 
+        // TODO why does TODO() not trigger this?
         exception<Throwable> { call, cause ->
             call.respondText(cause.message ?: "Internal Error", status = HttpStatusCode.InternalServerError)
         }

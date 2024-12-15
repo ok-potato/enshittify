@@ -82,13 +82,13 @@ fun HTML.releasePage(releaseId: String, releaseInfo: ReleaseInfo) {
                         text(releaseInfo.title ?: unknownRelease)
                     }
                     p(classes = "banner-artists") {
-                        text(releaseInfo.artists?.joinToString(", ") ?: unknownArtist)
+                        text(releaseInfo.artists.joinToString(", ").takeIf { it.isNotEmpty() } ?: unknownArtist)
                     }
                 }
             }
             section(classes = "controls-bar") {
                 button(classes = "play-button") {
-                    img(src = "/play.svg", classes = "play-icon play-icon-play") {  }
+                    img(src = "/play.svg", classes = "play-icon play-icon-play") { }
                 }
             }
             section(classes = "track-list") {
@@ -105,11 +105,12 @@ fun HTML.releasePage(releaseId: String, releaseInfo: ReleaseInfo) {
                                     }
                                 }
                                 p(classes = "track-artists") {
-                                    text((track.artists ?: releaseInfo.artists)?.joinToString(", ") ?: unknownArtist)
+                                    text((track.artists.takeIf { it.isNotEmpty() } ?: releaseInfo.artists)
+                                        .joinToString(", ").takeIf { it.isNotEmpty() } ?: unknownArtist)
                                 }
                             }
                             div(classes = "track-length") {
-                                text(track.length)
+                                text("${track.length / 60}:${track.length % 60}")
                             }
                         }
                     }

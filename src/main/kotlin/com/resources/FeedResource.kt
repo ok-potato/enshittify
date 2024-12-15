@@ -44,71 +44,84 @@ fun HTML.feedPage(allReleaseInfo: Map<String, ReleaseInfo>) {
             }
         }
 
-        form(action = "upload", classes = "upload-form") {
-            label {
-                htmlFor = "title"
-                text("Title")
-            }
-            input(type = InputType.text, name = "title") {
-                placeholder = "Title"
-                id = "title"
-            }
-
-            div(classes = "form-artists") {
-                label(classes = "artist-label") {
-                    htmlFor = "artist-1"
-                    text("Artists")
+        article(classes = "upload-window") {
+            header {
+                h1 {
+                    text("Post your own release")
                 }
-                input(type = InputType.text, name = "artist") {
-                    placeholder = "Artist 1"
-                    id = "artist-1"
+                div(classes = "upload-window-header-buttons") {
+                    button(classes = "upload-window-close") {
+                        div {
+                            text("x")
+                        }
+                    }
                 }
             }
+            form(
+                method = FormMethod.post,
+                action = "upload",
+                classes = "upload-form",
+                encType = FormEncType.multipartFormData
+            ) {
+                fieldSet {
+                    label {
+                        htmlFor = "title"
+                        text("Title")
+                    }
+                    input(type = InputType.text, name = "title") {
+                        placeholder = "Title"
+                        id = "title"
+                    }
 
-            button(type = ButtonType.button) {
-                id = "add-artist"
-                text("+")
-            }
+                    fieldSet(classes = "form-artists") {
+                        label(classes = "artist-label") {
+                            text("Artists")
+                        }
+                        button(type = ButtonType.button) {
+                            id = "add-artist"
+                            text("+")
+                        }
+                    }
+                }
 
-            label {
-                htmlFor = "cover-art"
-                text("Cover Art")
-            }
-            input(type = InputType.file, name = "cover-art") {
-                accept = "image/png, image/jpeg"
-                id = "cover-art"
-                onChange = "displayPreview()"
-            }
-            img {
-                id = "cover-art-preview"
-                width = "200"
-                height = "200"
-            }
+                fieldSet(classes = "form-cover-art") {
+                    label {
+                        text("Cover Art")
+                    }
+                    label {
+                        id = "cover-art-select"
+                        htmlFor = "cover-art"
+                        img {
+                            src = "/upload.svg"
+                            id = "cover-art-preview"
+                            width = "200"
+                            height = "200"
+                        }
+                    }
+                    input(type = InputType.file, name = "cover-art") {
+                        accept = "image/png, image/jpeg"
+                        id = "cover-art"
+                        onChange = "displayPreview()"
+                    }
+                }
 
-            div(classes = "form-tracks") {
-                for (trackNr in 1..3) {
+
+                fieldSet(classes = "form-tracks") {
                     label(classes = "track-label") {
-                        htmlFor = "track-$trackNr"
                         text("Tracks")
                     }
-                    input(type = InputType.file, name = "track-file") {
-                        id = "track-$trackNr-file"
-                    }
-                    input(type = InputType.text, name = "track-name") {
-                        placeholder = "Track $trackNr"
-                        id = "track-$trackNr-name"
+                    button(type = ButtonType.button) {
+                        id = "add-track"
+                        text("+")
                     }
                 }
-            }
 
-            button(type = ButtonType.button) {
-                id = "add-track"
-                text("+")
-            }
-
-            button(type = ButtonType.submit) {
-                id = "submit-upload-form"
-                text("Submit")
+                footer {
+                    button(type = ButtonType.submit) {
+                        id = "submit-upload-form"
+                        text("Submit")
+                    }
+                }
             }
         }
     }

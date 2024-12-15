@@ -10,4 +10,5 @@
     <logger name="io.ktor.server.routing.Routing" level="DEBUG" />
     <logger name="org.eclipse.jetty" level="INFO"/>
     <logger name="io.netty" level="INFO"/>
+    <logger name="ws.schild.jave.process.ffmpeg" level="INFO"/>
 </configuration>
