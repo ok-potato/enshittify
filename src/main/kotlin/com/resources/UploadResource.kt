@@ -43,6 +43,7 @@ const val trackNamePrefix = "track-name-"
 
 fun PartData.FormItem.handleReleaseInfo(infoBuilder: ReleaseInfoBuilder) {
     val name = name ?: return
+    if (value.isBlank()) return
     when {
         name == "title" -> infoBuilder.title = value
 
@@ -55,6 +56,8 @@ fun PartData.FormItem.handleReleaseInfo(infoBuilder: ReleaseInfoBuilder) {
             val trackNr = name.slice(trackNamePrefix.length..<name.length).toInt()
             infoBuilder.trackNames[trackNr] = value
         }
+
+        else -> log.debug("Discarded unknown form item: {}", name)
     }
 }
 
@@ -65,14 +68,14 @@ const val trackFilePrefix = "track-file-"
 suspend fun PartData.FileItem.handleReleaseFile(path: String, infoBuilder: ReleaseInfoBuilder) {
     val name = name ?: return
     when {
-        name == "cover-art" -> {
-            saveCoverArt("$path/cover.jpg")
-        }
+        name == "cover-art" -> saveCoverArt("$path/cover.jpg")
 
         name.startsWith(trackFilePrefix) -> {
             val trackNr = name.slice(trackFilePrefix.length..<name.length).toInt()
             saveTrack(path, trackNr, infoBuilder)
         }
+
+        else -> log.debug("Discarded unknown file item: {}", name)
     }
 }
 

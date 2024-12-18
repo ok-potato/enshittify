@@ -63,9 +63,9 @@ suspend fun saveMp3(channel: ByteReadChannel, path: String, trackNr: Int, infoBu
         channel.copyAndClose(tmpFile.writeChannel())
 
         val multimediaObject = MultimediaObject(tmpFile)
-        infoBuilder.trackLengths[trackNr] = multimediaObject.info.duration.toInt()
+        infoBuilder.trackLengths[trackNr] = (multimediaObject.info.duration / 1000).toInt()
 
-        val attributes = EncodingAttributes().setAudioAttributes(AudioAttributes().setBitRate(30000).setChannels(1))
+        val attributes = EncodingAttributes().setAudioAttributes(AudioAttributes().setBitRate(30_000).setChannels(1))
         val encoder = Encoder()
         encoder.encode(multimediaObject, mp3File, attributes)
 

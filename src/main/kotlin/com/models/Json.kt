@@ -8,6 +8,6 @@ interface Json
 
 private val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()!!
 
-fun <T: Json> T.serialize(kClass: KClass<T>) = moshi.adapter(kClass.java).toJson(this)
+fun <T: Json> T.serialize(kClass: KClass<T>): String = moshi.adapter(kClass.java).toJson(this)
 
 fun <T: Json> String.deserialize(kClass: KClass<T>) = moshi.adapter(kClass.java).fromJson(this)
