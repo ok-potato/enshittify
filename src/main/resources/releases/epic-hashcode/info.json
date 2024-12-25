@@ -1,36 +1,47 @@
 {
+  "artists": [],
   "tracks": [
     {
       "title": "God is watching you",
-      "length": "0:10"
+      "length": "10",
+      "artists": []
     },
     {
       "title": "Oh noes someone deleted this song and you get a 404 if you try to request it :(",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     },
     { "title": "mr horse man",
-      "length": "0:00"
+      "length": "100",
+      "artists": []
     },
     { "title": "ubaber",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     },
     { "title": "ubaber",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     },
     { "title": "ubaber",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     },
     { "title": "ubaber",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     },
     { "title": "ubaber",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     },
     { "title": "ubaber",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     },
     { "title": "ubaber",
-      "length": "0:00"
+      "length": "0",
+      "artists": []
     }
   ]
 }

@@ -3,6 +3,8 @@ package com.components.templates
 import kotlinx.html.HEAD
 import kotlinx.html.link
 
-fun HEAD.styles() {
-    link(href = "/styles.css", rel = "stylesheet")
+fun HEAD.styles(vararg sources: String = arrayOf("/styles.css")) {
+    for (source in sources) {
+        link(href = source, rel = "stylesheet")
+    }
 }

@@ -19,13 +19,9 @@ private const val coverUri = "cover.jpg"
 
 // TODO do some caching here or something idk lol
 suspend fun fetchReleaseInfo(releaseId: String): ReleaseInfo {
-    val releaseInfo = try {
-        withContext(Dispatchers.IO) {
-            File("$releasesBasePath/$releaseId/info.json").readText()
-        }.deserialize(ReleaseInfo::class)!!
-    } catch (exception: Exception) {
-        throw NotFoundException()
-    }
+    val releaseInfo = withContext(Dispatchers.IO) {
+        File("$releasesBasePath/$releaseId/info.json").readText()
+    }.deserialize(ReleaseInfo::class)!!
 
     // TODO check that all files+info are there, so the client doesn't try fetching non-existent data
     return releaseInfo
@@ -39,6 +35,7 @@ suspend fun fetchAllReleaseInfo(): Map<String, ReleaseInfo> {
                 try {
                     releaseId to fetchReleaseInfo(releaseId)
                 } catch (exception: Exception) {
+                    log.debug("", exception)
                     null
                 }
             }
@@ -93,7 +90,8 @@ fun HTML.releasePage(releaseId: String, releaseInfo: ReleaseInfo) {
             }
             section(classes = "track-list") {
                 ul {
-                    releaseInfo.tracks.forEachIndexed { idx, track ->
+                    for (idx in releaseInfo.tracks.indices) {
+                        val track = releaseInfo.tracks[idx]
                         val trackNr = idx + 1
 
                         li(classes = "track") {
@@ -110,7 +108,9 @@ fun HTML.releasePage(releaseId: String, releaseInfo: ReleaseInfo) {
                                 }
                             }
                             div(classes = "track-length") {
-                                text("${track.length / 60}:${track.length % 60}")
+                                val minutes = track.length / 60
+                                val seconds = track.length % 60
+                                text(String.format("%d:%02d", minutes, seconds))
                             }
                         }
                     }

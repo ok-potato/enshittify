@@ -2,6 +2,7 @@ package com
 
 import com.models.ReleaseInfo
 import com.resources.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.server.http.content.*
@@ -37,7 +38,12 @@ fun Application.configureRouting() {
 
         get("/$releaseBaseUrl/{id}") {
             val releaseId = call.parameters["id"]!!
-            val releaseInfo = fetchReleaseInfo(releaseId)
+            val releaseInfo = try {
+                fetchReleaseInfo(releaseId)
+            } catch (exception: Exception) {
+                call.response.status(HttpStatusCode.NotFound)
+                return@get
+            }
             call.respondHtml { releasePage(releaseId, releaseInfo) }
         }
 

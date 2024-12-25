@@ -13,7 +13,7 @@ fun HTML.feedPage(allReleaseInfo: Map<String, ReleaseInfo>) {
         title {
             text(companyBrand)
         }
-        styles()
+        styles("/styles.css", "upload-form.css")
         script {
             src = "/feed.js"
             defer = true
@@ -24,7 +24,7 @@ fun HTML.feedPage(allReleaseInfo: Map<String, ReleaseInfo>) {
 
         article {
             section(classes = "feed") {
-                allReleaseInfo.entries.forEach { (releaseId, releaseInfo) ->
+                for ((releaseId, releaseInfo) in allReleaseInfo.entries) {
                     val releaseUrl = "release/$releaseId"
                     a(href = releaseUrl, classes = "feed-item") {
                         img(classes = "feed-cover") {
@@ -37,7 +37,7 @@ fun HTML.feedPage(allReleaseInfo: Map<String, ReleaseInfo>) {
                             text(releaseInfo.title ?: unknownRelease)
                         }
                         p(classes = "feed-artists") {
-                            text(releaseInfo.artists?.joinToString() ?: unknownArtist)
+                            text(releaseInfo.artists.joinToString().takeIf { it.isNotBlank() } ?: unknownArtist)
                         }
                     }
                 }
@@ -47,7 +47,7 @@ fun HTML.feedPage(allReleaseInfo: Map<String, ReleaseInfo>) {
         article(classes = "upload-window") {
             header {
                 h1 {
-                    text("Post your own release")
+                    text("Post Your Release")
                 }
                 div(classes = "upload-window-header-buttons") {
                     button(classes = "upload-window-close") {
