@@ -58,6 +58,10 @@ fun Application.configureRouting() {
             call.respondFile(fetchTrack(releaseId, trackNr))
         }
 
+        get("/upload") {
+            call.respondHtml { uploadForm() }
+        }
+
         post("/upload") {
             // TODO failure case
             val releasePageUrl = call.receiveMultipart().uploadRelease()

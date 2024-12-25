@@ -3,7 +3,8 @@
   --main-color: white;
   --off-color: rgb(231, 231, 231);
   --deemphasized-color: rgb(190, 190, 190);
-  --highlight-color: rgb(78, 224, 78);
+  --highlight-color: rgb(60, 205, 60);
+  --highlight-hover-color: rgb(51, 176, 51);
   --slight-highlight-color: rgb(192, 247, 137);
 
   --nav-scale: 2rem;
@@ -115,7 +116,7 @@ nav *:hover {
 }
 
 .play-button {
-  background-color: green;
+  background-color: var(--highlight-color);
   border-radius: 100em;
   border: 0;
   padding: 1.2em;
@@ -123,7 +124,7 @@ nav *:hover {
 }
 
 .play-button:hover {
-  background-color: rgb(0, 117, 0);
+  background-color: var(--highlight-hover-color);
   cursor: pointer;
 }
 
@@ -228,6 +229,32 @@ nav *:hover {
 .feed-artists {
   color: var(--deemphasized-color);
   font-size: 0.9em;
+}
+
+#post-release {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+
+  margin: var(--main-padding);
+  padding: 1rem;
+  background-color: var(--highlight-color);
+  border-radius: 10rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#post-release:hover {
+  background-color: var(--highlight-hover-color);
+  cursor: pointer;
+}
+
+#post-release > img {
+  width: 2.5rem;
+  height: 2.5rem;
+  filter: drop-shadow(0 0 0.2rem #0007);
 }
 
 @media (max-width: 820px) {

@@ -1,166 +1,134 @@
-/* upload form */
+html {
+    background: #ccc;
+}
 
 .upload-window {
-    margin: calc(var(--nav-height) + 2rem) 2rem 2rem;
-    padding: calc(var(--form-padding) * 2);
+    margin-top: var(--nav-height);
     position: absolute;
     height: fit-content;
+    padding: 2rem;
     inset: 0;
-    background-color: rgba(204, 204, 204, 0.8);
-    box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(0.5rem);
     font-size: 1.1rem;
     font-weight: 600;
+}
 
-    display: none;
-  }
-  
-  .upload-window * {
+.upload-window * {
     color: black;
     text-shadow: none;
-  }
-  
-  .upload-window header {
+}
+
+.upload-window header {
     border-bottom: 1px solid rgb(255, 255, 255);
     border-image: linear-gradient(0.25turn, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0)) 1;
     display: flex;
-  }
-  
-  .upload-window header h1 {
+}
+
+.upload-window header h1 {
     font-size: 1.5rem;
     width: 100%;
     padding-bottom: 1.5rem;
-  }
-  
-  .upload-window-header-buttons {
-    display: flex;
-    align-items: flex-start;
-    height: fit-content;
-  }
-  
-  .upload-window-close {
-    border: 1px solid black;
-    background-color: white;
-    overflow: hidden;
-    font-size: 1.8rem;
-    font-weight: 600;
-    height: 1.8rem;
-    width: 1.8rem;
-  }
-  
-  .upload-window-close:hover {
-    background-color: black;
-  }
-  
-  .upload-window-close:hover * {
-    color: white;
-  }
-  
-  
-  .upload-window-close div {
-    transform: translateY(-0.4rem);
-    color: black;
-  }
-  
-  .upload-form button,
-  .upload-form label,
-  .upload-form input {
+}
+
+.upload-form button,
+.upload-form label,
+.upload-form input {
     margin: 0 0.5em 0.5em 0;
-  }
-  
-  .upload-form button,
-  .upload-form input,
-  .upload-track-impostor {
+}
+
+.upload-form button,
+.upload-form input,
+.upload-track-impostor {
     border: 1px solid black;
     padding: 0 0.4em 0;
-  
+
     font-weight: 600;
     background-color: white;
     color: black;
-  }
-  
-  .upload-form button {
+}
+
+.upload-form button {
     background-color: white;
-  }
-  
-  .upload-form button:hover {
+}
+
+.upload-form button:hover {
     cursor: pointer;
     background-color: black;
     color: white;
-  }
-  
-  .upload-form>fieldset {
+}
+
+.upload-form>fieldset {
     border: 0;
     border-bottom: 1px solid rgb(255, 255, 255);
     border-image: linear-gradient(0.25turn, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0)) 1;
     padding: var(--form-padding) 0 var(--form-padding);
-  }
-  
-  .form-artists {
+}
+
+.form-artists {
     border: 0;
     padding-top: var(--form-padding);
-  }
-  
-  .form-cover-art label {
+}
+
+.form-cover-art label {
     display: block;
-  }
-  
-  #cover-art-select {
+}
+
+#cover-art-select {
     display: inline-block;
     width: 13rem;
     height: 13rem;
     border: 1px solid black;
     background-color: rgba(0, 0, 0, 0);
     overflow: hidden;
-  }
-  
-  #cover-art-select:hover {
+}
+
+#cover-art-select:hover {
     cursor: pointer;
     filter: invert()
-  }
-  
-  #cover-art-select img {
+}
+
+#cover-art-select img {
     padding: 5rem;
     width: 100%;
     height: 100%;
     object-fit: scale-down;
-  }
-  
-  #cover-art {
+}
+
+#cover-art {
     width: 0;
     height: 0;
     visibility: hidden;
-  }
-  
-  .upload-track {
+}
+
+.upload-track {
     display: flex;
     align-items: start;
-  }
-  
-  .upload-track>* {
+}
+
+.upload-track>* {
     font-size: 1rem;
     margin: 0 0.5em 0.5em 0;
-  }
-  
-  .upload-track-file {
+}
+
+.upload-track-file {
     display: none;
-  }
-  
-  .upload-track-impostor {
+}
+
+.upload-track-impostor {
     background-color: var(--slight-highlight-color);
-  }
-  
-  .upload-track-impostor:hover {
+}
+
+.upload-track-impostor:hover {
     cursor: pointer;
     color: white;
     background-color: black;
-  }
-  
-  .upload-window footer {
+}
+
+.upload-window footer {
     padding-top: var(--form-padding);
-  }
-  
-  #submit-upload-form {
+}
+
+#submit-upload-form {
     border: 1px solid black;
     padding: 0 0.5rem 0;
     margin: 0;
@@ -168,10 +136,10 @@
     font-weight: 600;
     background-color: white;
     color: black;
-  }
-  
-  #submit-upload-form:hover {
+}
+
+#submit-upload-form:hover {
     cursor: pointer;
     background-color: black;
     color: white;
-  }
+}
