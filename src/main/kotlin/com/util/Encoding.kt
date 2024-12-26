@@ -20,12 +20,14 @@ import javax.imageio.stream.FileImageOutputStream
 const val coverDimension = 128
 
 // kotlin can't save me now
-fun saveJpeg(image: BufferedImage, path: String) {
+fun saveJpeg(image: BufferedImage?, path: String) {
     val flatImage = BufferedImage(coverDimension, coverDimension, BufferedImage.TYPE_INT_RGB)
 
     val graphics2D = flatImage.createGraphics()
     graphics2D.drawCheckerboard(coverDimension)
-    graphics2D.drawImage(image, 0, 0, coverDimension, coverDimension, null)
+    if (image != null) {
+        graphics2D.drawImage(image, 0, 0, coverDimension, coverDimension, null)
+    }
 
     val jpegParam = JPEGImageWriteParam(null)
     jpegParam.compressionMode = ImageWriteParam.MODE_EXPLICIT
@@ -65,7 +67,9 @@ suspend fun saveMp3(channel: ByteReadChannel, path: String, trackNr: Int, infoBu
         val multimediaObject = MultimediaObject(tmpFile)
         infoBuilder.trackLengths[trackNr] = (multimediaObject.info.duration / 1000).toInt()
 
-        val attributes = EncodingAttributes().setAudioAttributes(AudioAttributes().setBitRate(30_000).setChannels(1))
+        val attributes = EncodingAttributes().setAudioAttributes(
+            AudioAttributes().setSamplingRate(24_000).setBitRate(8_000).setChannels(1)
+        )
         val encoder = Encoder()
         encoder.encode(multimediaObject, mp3File, attributes)
 

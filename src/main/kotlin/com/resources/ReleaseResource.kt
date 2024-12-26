@@ -23,7 +23,6 @@ suspend fun fetchReleaseInfo(releaseId: String): ReleaseInfo {
         File("$releasesBasePath/$releaseId/info.json").readText()
     }.deserialize(ReleaseInfo::class)!!
 
-    // TODO check that all files+info are there, so the client doesn't try fetching non-existent data
     return releaseInfo
 }
 

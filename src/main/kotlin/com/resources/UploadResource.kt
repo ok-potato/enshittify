@@ -10,6 +10,9 @@ import com.util.saveMp3
 import io.ktor.http.content.*
 import io.ktor.util.logging.*
 import io.ktor.utils.io.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.util.*
@@ -62,11 +65,8 @@ fun PartData.FormItem.handleReleaseInfo(infoBuilder: ReleaseInfoBuilder) {
     }
 }
 
-
 const val trackFilePrefix = "track-file-"
 
-// TODO this is almost definitely blocking
-// TODO validate file type
 suspend fun PartData.FileItem.handleReleaseFile(path: String, infoBuilder: ReleaseInfoBuilder) {
     val name = name ?: return
     when {
@@ -81,14 +81,18 @@ suspend fun PartData.FileItem.handleReleaseFile(path: String, infoBuilder: Relea
     }
 }
 
-suspend fun PartData.FileItem.saveCoverArt(path: String) {
-    val bytes = this.provider().toByteArray()
-    val image = ImageIO.read(ByteArrayInputStream(bytes))
-    saveJpeg(image, path)
+suspend fun PartData.FileItem.saveCoverArt(path: String) = coroutineScope {
+    launch(Dispatchers.IO) {
+        val bytes = provider().toByteArray()
+        val image = ImageIO.read(ByteArrayInputStream(bytes)) ?: null
+        saveJpeg(image, path)
+    }
 }
 
-suspend fun PartData.FileItem.saveTrack(path: String, trackNr: Int, infoBuilder: ReleaseInfoBuilder) {
-    saveMp3(this.provider(), path, trackNr, infoBuilder)
+suspend fun PartData.FileItem.saveTrack(path: String, trackNr: Int, infoBuilder: ReleaseInfoBuilder) = coroutineScope {
+    launch(Dispatchers.IO) {
+        saveMp3(this@saveTrack.provider(), path, trackNr, infoBuilder)
+    }
 }
 
 fun releaseUUID(): UUID {
