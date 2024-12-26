@@ -17,7 +17,7 @@ import javax.imageio.ImageWriteParam
 import javax.imageio.plugins.jpeg.JPEGImageWriteParam
 import javax.imageio.stream.FileImageOutputStream
 
-const val coverDimension = 256
+const val coverDimension = 128
 
 // kotlin can't save me now
 fun saveJpeg(image: BufferedImage, path: String) {
@@ -47,10 +47,10 @@ fun Graphics2D.drawCheckerboard(dimension: Int) {
     fillRect(0, 0, dimension, dimension)
 
     color = Color(200, 200, 200)
-    val size = dimension / 16
-    for (x in 0..<dimension step size) {
-        for (y in 0..<dimension step size) {
-            if (x / size % 2 == y / size % 2) fillRect(x, y, size, size)
+    val checkerSize = (dimension + 15) / 16
+    for (x in 0..<dimension step checkerSize) {
+        for (y in 0..<dimension step checkerSize) {
+            if (x / checkerSize % 2 == y / checkerSize % 2) fillRect(x, y, checkerSize, checkerSize)
         }
     }
 }

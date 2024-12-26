@@ -17,6 +17,7 @@ import javax.imageio.ImageIO
 
 val log = KtorSimpleLogger("Upload")
 
+// TODO roll back + 400 on bad data
 suspend fun MultiPartData.uploadRelease(): String {
     val uuid = releaseUUID()
     val path = "$releasesBasePath/$uuid"
@@ -65,6 +66,7 @@ fun PartData.FormItem.handleReleaseInfo(infoBuilder: ReleaseInfoBuilder) {
 const val trackFilePrefix = "track-file-"
 
 // TODO this is almost definitely blocking
+// TODO validate file type
 suspend fun PartData.FileItem.handleReleaseFile(path: String, infoBuilder: ReleaseInfoBuilder) {
     val name = name ?: return
     when {
