@@ -106,3 +106,14 @@ function displayTrackFileName(label, fileName) {
         label.textContent = fileName
     }
 }
+
+var spinner = document.getElementById("submit-form-spinner")
+
+onpageshow = event => {
+    console.log("page show")
+    spinner.style.display = "none"    
+}
+
+function formSubmitted(event) {
+    spinner.style.display = "inline-block"
+}

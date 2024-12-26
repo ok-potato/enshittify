@@ -1,3 +1,14 @@
+// state
+
+/**
+ * @type {Number}
+*/
+var currentTrackIdx = undefined
+/**
+ * @type {Boolean}
+ */
+var paused = true
+
 // play button
 
 /**
@@ -17,8 +28,9 @@ playButton.addEventListener("click", event => {
 })
 
 // track list items + selection
-
 const trackListItems = Array.from(document.getElementsByClassName("track"))
+const loadedTracks = new Array(trackListItems.length)
+
 /**
  * @type {Element}
 */
@@ -53,16 +65,6 @@ function unselect() {
 }
 
 // track playing
-
-const loadedTracks = new Array(trackListItems.length)
-/**
- * @type {Number}
-*/
-var currentTrackIdx = undefined
-/**
- * @type {Boolean}
- */
-var paused = true
 
 /**
  * @param {Number} trackIdx

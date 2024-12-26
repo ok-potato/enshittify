@@ -126,6 +126,8 @@ html {
 
 .upload-window footer {
     padding-top: var(--form-padding);
+    display: flex;
+    align-items: center;
 }
 
 #submit-upload-form {
@@ -142,4 +144,18 @@ html {
     cursor: pointer;
     background-color: black;
     color: white;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+#submit-form-spinner {
+    display: none;
+
+    margin-left: 1rem;
+    width: 1.8rem;
+    animation: 1s linear infinite rotate;
 }

@@ -63,7 +63,6 @@ fun Application.configureRouting() {
         }
 
         post("/upload") {
-            // TODO failure case
             val releasePageUrl = call.receiveMultipart().uploadRelease()
             call.respondRedirect(releasePageUrl)
         }

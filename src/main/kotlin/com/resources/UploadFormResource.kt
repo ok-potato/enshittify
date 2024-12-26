@@ -29,6 +29,8 @@ fun HTML.uploadForm() {
                 classes = "upload-form",
                 encType = FormEncType.multipartFormData
             ) {
+                onSubmit = "formSubmitted(event)"
+
                 fieldSet {
                     label {
                         htmlFor = "title"
@@ -86,6 +88,10 @@ fun HTML.uploadForm() {
                     button(type = ButtonType.submit) {
                         id = "submit-upload-form"
                         text("Submit")
+                    }
+                    img {
+                        src = "/spinner.svg"
+                        id = "submit-form-spinner"
                     }
                 }
             }

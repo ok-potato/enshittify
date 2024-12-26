@@ -8,13 +8,17 @@ import io.ktor.server.response.*
 
 fun Application.handleStatuses() {
     install(StatusPages) {
-        exception<NotFoundException> { call, _ ->
-            call.response.status(HttpStatusCode.NotFound)
-        }
+        exception<NotFoundException> { call, _ -> call.response.status(HttpStatusCode.NotFound) }
+        exception<BadRequestException> { call, _ -> call.response.status(HttpStatusCode.BadRequest) }
 
-        // TODO why does TODO() not trigger this?
-        exception<Throwable> { call, cause ->
-            call.respondText(cause.message ?: "Internal Error", status = HttpStatusCode.InternalServerError)
+        if (this@handleStatuses.developmentMode) {
+            exception<Throwable> { call, cause ->
+                call.respondText(cause.message ?: "Internal Error", status = HttpStatusCode.InternalServerError)
+            }
+        } else {
+            exception<Throwable> { call, _ ->
+                call.respondText("Internal Error", status = HttpStatusCode.InternalServerError)
+            }
         }
 
         status(HttpStatusCode.OK) { _, _ -> }
