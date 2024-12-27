@@ -24,29 +24,27 @@ fun HTML.feedPage(allReleaseInfo: Map<String, ReleaseInfo>) {
 
         article {
             section(classes = "feed") {
-                for (i in 0..15) {
-                    for ((releaseId, releaseInfo) in allReleaseInfo.entries) {
-                        val releaseUrl = "release/$releaseId"
-                        a(href = releaseUrl, classes = "feed-item") {
-                            img(classes = "feed-cover") {
-                                src = "$releaseUrl/cover.jpg"
-                                alt = releaseInfo.title ?: unknownRelease
-                                width = "400"
-                                height = "400"
-                            }
-                            p(classes = "feed-title") {
-                                text(releaseInfo.title ?: unknownRelease)
-                            }
-                            p(classes = "feed-artists") {
-                                text(releaseInfo.artists.joinToString().takeIf { it.isNotBlank() } ?: unknownArtist)
-                            }
+                for ((releaseId, releaseInfo) in allReleaseInfo.entries) {
+                    val releaseUrl = "release/$releaseId"
+                    a(href = releaseUrl, classes = "feed-item") {
+                        img(classes = "feed-cover") {
+                            src = "$releaseUrl/cover.jpg"
+                            alt = releaseInfo.title ?: unknownRelease
+                            width = "400"
+                            height = "400"
+                        }
+                        p(classes = "feed-title") {
+                            text(releaseInfo.title ?: unknownRelease)
+                        }
+                        p(classes = "feed-artists") {
+                            text(releaseInfo.artists.joinToString().takeIf { it.isNotBlank() } ?: unknownArtist)
                         }
                     }
                 }
             }
         }
 
-        a(href="/upload") {
+        a(href = "/upload") {
             id = "post-release"
 
             img {

@@ -34,7 +34,10 @@ suspend fun fetchAllReleaseInfo(): Map<String, ReleaseInfo> {
                 try {
                     releaseId to fetchReleaseInfo(releaseId)
                 } catch (exception: Exception) {
-                    log.debug("", exception)
+                    log.debug("Failed to fetch release info for $releaseId")
+                    if (log.isTraceEnabled) {
+                        exception.printStackTrace()
+                    }
                     null
                 }
             }
@@ -48,7 +51,6 @@ fun fetchCover(releaseId: String): File {
 }
 
 fun fetchTrack(releaseId: String, trackNr: Int): File {
-    // TODO should check for this on upload if we consider it an exception
     val file = File("$releasesBasePath/$releaseId/$trackNr.mp3")
     if (file.exists()) return file else throw NotFoundException()
 }

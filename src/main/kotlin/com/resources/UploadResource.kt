@@ -9,18 +9,11 @@ import com.util.saveJpeg
 import com.util.saveMp3
 import io.ktor.http.content.*
 import io.ktor.util.logging.*
-import io.ktor.utils.io.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import java.io.ByteArrayInputStream
 import java.io.File
 import java.util.*
-import javax.imageio.ImageIO
 
 val log = KtorSimpleLogger("Upload")
 
-// TODO roll back + 400 on bad data
 suspend fun MultiPartData.uploadRelease(): String {
     val uuid = releaseUUID()
     val path = "$releasesBasePath/$uuid"
@@ -30,10 +23,17 @@ suspend fun MultiPartData.uploadRelease(): String {
     val infoBuilder = ReleaseInfoBuilder()
 
     forEachPart { partData ->
-        when (partData) {
-            is PartData.FormItem -> partData.handleReleaseInfo(infoBuilder)
-            is PartData.FileItem -> partData.handleReleaseFile(path, infoBuilder)
-            else -> log.debug("Unhandled part data type {} on '{}'", partData::class, partData.name)
+        try {
+            when (partData) {
+                is PartData.FormItem -> partData.handleReleaseInfo(infoBuilder)
+                is PartData.FileItem -> partData.handleReleaseFile(path, infoBuilder)
+                else -> log.debug("Unhandled part data type {} on '{}'", partData::class, partData.name)
+            }
+        } catch (exception: Exception) {
+            if (!File(path).deleteRecursively()) {
+                println("Failed to delete release upon upload error: $uuid")
+            }
+            throw exception
         }
     }
 
@@ -81,18 +81,12 @@ suspend fun PartData.FileItem.handleReleaseFile(path: String, infoBuilder: Relea
     }
 }
 
-suspend fun PartData.FileItem.saveCoverArt(path: String) = coroutineScope {
-    launch(Dispatchers.IO) {
-        val bytes = provider().toByteArray()
-        val image = ImageIO.read(ByteArrayInputStream(bytes)) ?: null
-        saveJpeg(image, path)
-    }
+suspend fun PartData.FileItem.saveCoverArt(path: String) {
+    saveJpeg(provider(), path)
 }
 
-suspend fun PartData.FileItem.saveTrack(path: String, trackNr: Int, infoBuilder: ReleaseInfoBuilder) = coroutineScope {
-    launch(Dispatchers.IO) {
-        saveMp3(this@saveTrack.provider(), path, trackNr, infoBuilder)
-    }
+suspend fun PartData.FileItem.saveTrack(path: String, trackNr: Int, infoBuilder: ReleaseInfoBuilder) {
+    saveMp3(provider(), path, trackNr, infoBuilder)
 }
 
 fun releaseUUID(): UUID {
