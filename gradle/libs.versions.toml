@@ -10,16 +10,19 @@ ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
 
 [libraries]
+jave = { module = "ws.schild:jave-core", version.ref = "jave-version" }
+jave-native-linux = { module = "ws.schild:jave-nativebin-linux64", version.ref = "jave-version" }
+jave-native-win = { module = "ws.schild:jave-nativebin-win64", version.ref = "jave-version" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-version" }
+moshi = { module = "com.squareup.moshi:moshi-kotlin", version = "1.15.2" }
+
 server-config-yaml = { module = "io.ktor:ktor-server-config-yaml-jvm", version.ref = "ktor-version" }
 server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
 server-host-common = { module = "io.ktor:ktor-server-host-common-jvm", version.ref = "ktor-version" }
 server-html-builder = { module = "io.ktor:ktor-server-html-builder", version.ref = "kotlin-version" }
 server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor-version" }
+server-ratelimit = { module = "io.ktor:ktor-server-rate-limit", version.ref = "ktor-version" }
+server-statuspages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor-version" }
 server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-version" }
 server-thymeleaf = { module = "io.ktor:ktor-server-thymeleaf-jvm", version.ref = "ktor-version" }
-moshi = { module = "com.squareup.moshi:moshi-kotlin", version = "1.15.2" }
-server-statuspages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor-version" }
-jave = { module = "ws.schild:jave-core", version.ref = "jave-version" }
-jave-native-win = { module = "ws.schild:jave-nativebin-win64", version.ref = "jave-version" }

@@ -5,3 +5,5 @@ ktor:
     development: true
     deployment:
         port: 8080
+    fatJar:
+        archiveFileName: enshittify.jar

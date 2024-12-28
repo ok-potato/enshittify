@@ -19,8 +19,10 @@ fun Application.handleStatuses() {
 }
 
 suspend fun Application.logAndRespond(call: ApplicationCall, cause: Throwable) {
-    if (log.isDebugEnabled) {
+    if (log.isTraceEnabled) {
         cause.printStackTrace()
+    } else {
+        log.debug(cause.message)
     }
 
     when (cause) {
