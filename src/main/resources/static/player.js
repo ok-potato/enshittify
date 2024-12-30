@@ -112,6 +112,11 @@ function stop() {
 }
 
 function enqueue(trackIdx) {
+    if (trackIdx >= trackListItems.length) {
+        console.log("end of tracklist")
+        return
+    }
+
     // fetch the new track if it isn't already in memory
     const newTrack = (loadedTracks[trackIdx] != undefined) ? loadedTracks[trackIdx] : new Audio(window.location.href + "/" + (trackIdx + 1))
 
