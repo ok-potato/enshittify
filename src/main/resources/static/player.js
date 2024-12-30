@@ -114,18 +114,23 @@ function stop() {
 function enqueue(trackIdx) {
     if (trackIdx >= trackListItems.length) {
         console.log("end of tracklist")
+        currentTrackIdx = 0
+        stop()
         return
     }
 
     // fetch the new track if it isn't already in memory
     const newTrack = (loadedTracks[trackIdx] != undefined) ? loadedTracks[trackIdx] : new Audio(window.location.href + "/" + (trackIdx + 1))
+    loadedTracks[trackIdx] = newTrack
 
     // play the track if it's ready (i.e. already in memory) - otherwise, set up callbacks
     if (newTrack.readyState == HTMLMediaElement.HAVE_ENOUGH_DATA) {
+        console.debug(`track ${trackIdx + 1} was already loaded`)
         play(newTrack, trackIdx)
     } else {
         newTrack.oncanplaythrough = event => { play(newTrack, trackIdx) }
         newTrack.onerror = event => {
+            loadedTracks[trackIdx] = undefined // might be network error -> let user retry
             console.log("cancel playback")
             newTrack.oncanplaythrough = event => { }
             cancelPlayback()
@@ -134,13 +139,22 @@ function enqueue(trackIdx) {
             }
         }
     }
+
+    // preload next track
+    if (trackIdx < trackListItems.length - 1 && loadedTracks[trackIdx + 1] == undefined) {
+        const nextTrack = new Audio(window.location.href + "/" + (trackIdx + 2))
+        loadedTracks[trackIdx + 1] = nextTrack
+        nextTrack.onerror = event => {
+            loadedTracks[trackIdx + 1] = undefined  // might be network error -> let user retry
+        }
+        console.debug("preloading next track")
+    }
 }
 
 function play(track, trackIdx) {
     track.oncanplaythrough = event => { }
     track.onended = event => { switchTrackTo(trackIdx + 1) }
     currentTrackIdx = trackIdx
-    loadedTracks[trackIdx] = track
     track.play()
 
     paused = false
