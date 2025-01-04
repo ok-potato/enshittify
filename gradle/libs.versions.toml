@@ -1,8 +1,9 @@
 [versions]
+exposed-version = "0.57.0"
+jave-version = "3.5.0"
 kotlin-version = "2.1.0"
 ktor-version = "3.0.2"
 logback-version = "1.5.15"
-jave-version = "3.5.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
@@ -10,6 +11,7 @@ ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
 
 [libraries]
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed-version" }
 jave = { module = "ws.schild:jave-core", version.ref = "jave-version" }
 jave-native-linux = { module = "ws.schild:jave-nativebin-linux64", version.ref = "jave-version" }
 jave-native-win = { module = "ws.schild:jave-nativebin-win64", version.ref = "jave-version" }

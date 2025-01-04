@@ -36,7 +36,7 @@ suspend fun MultiPartData.uploadRelease(): String {
             throw exception
         }
     }
-
+    // TODO sql
     File("$path/info.json").writeText(infoBuilder().serialize(ReleaseInfo::class))
 
     return url
