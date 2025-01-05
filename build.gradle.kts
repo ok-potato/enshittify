@@ -31,9 +31,12 @@ dependencies {
     testImplementation(libs.kotlin.test.junit)
 
     implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
     implementation(libs.logback.classic)
     implementation(libs.moshi)
     implementation(libs.jave)
     implementation(libs.jave.native.linux)
     implementation(libs.jave.native.win)
+    implementation(libs.jooq)
+    implementation(libs.postgresql)
 }

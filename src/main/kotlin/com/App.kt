@@ -7,8 +7,9 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    println("dev mode: $developmentMode")
+    if (developmentMode) log.info("DEV MODE")
 
     handleStatuses()
+    configureDatabases()
     configureRouting()
 }

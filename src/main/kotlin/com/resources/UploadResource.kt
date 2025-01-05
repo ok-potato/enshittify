@@ -1,14 +1,19 @@
 package com.resources
 
-import com.models.ReleaseInfo
-import com.models.ReleaseInfoBuilder
-import com.models.serialize
+import com.models.*
 import com.releaseBaseUrl
 import com.releasesBasePath
 import com.util.saveJpeg
 import com.util.saveMp3
 import io.ktor.http.content.*
+import io.ktor.server.html.*
 import io.ktor.util.logging.*
+import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.mergeFrom
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
 import java.util.*
 
@@ -36,11 +41,27 @@ suspend fun MultiPartData.uploadRelease(): String {
             throw exception
         }
     }
+    val releaseInfo = infoBuilder()
+
+    val allArtists = (releaseInfo.tracks.flatMap { it.artists } + releaseInfo.artists).toSet()
+
     // TODO sql
+    transaction {
+        sql("")
+        ReleaseFeaturesTable.mergeFrom(ArtistsTable) {
+            whenMatchedUpdate {  }
+            whenNotMatchedInsert {  }
+        }
+
+        releaseInfo.artists
+    }
+
     File("$path/info.json").writeText(infoBuilder().serialize(ReleaseInfo::class))
 
     return url
 }
+
+fun Transaction.sql(statement: String) = TransactionManager.current().exec(statement)
 
 const val artistPrefix = "artist-"
 const val trackNamePrefix = "track-name-"
