@@ -1,5 +1,6 @@
 
 plugins {
+    alias(libs.plugins.jooq.codegen.gradle)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
     alias(libs.plugins.serialization)
@@ -30,13 +31,44 @@ dependencies {
     testImplementation(libs.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 
-    implementation(libs.exposed.core)
-    implementation(libs.exposed.jdbc)
     implementation(libs.logback.classic)
     implementation(libs.moshi)
     implementation(libs.jave)
     implementation(libs.jave.native.linux)
     implementation(libs.jave.native.win)
-    implementation(libs.jooq)
     implementation(libs.postgresql)
+
+    implementation(libs.jooq)
+    jooqCodegen(libs.jooq.codegen)
+    jooqCodegen(libs.jooq.meta)
+    jooqCodegen(libs.postgresql)
+}
+
+jooq {
+    configuration {
+        jdbc {
+            driver = "org.postgresql.Driver"
+            url = "jdbc:postgresql://localhost:5432/enshittify"
+            user = "postgres"
+            password = "1234"
+        }
+
+        generator {
+            name = "org.jooq.codegen.KotlinGenerator"
+
+            database {
+                name = "org.jooq.meta.postgres.PostgresDatabase"
+                includes = ".*"
+                excludes = ""
+                inputSchema = "public"
+            }
+
+            generate {}
+
+            target {
+                packageName = "generated.jooq"
+                directory = "/src/main/kotlin"
+            }
+        }
+    }
 }

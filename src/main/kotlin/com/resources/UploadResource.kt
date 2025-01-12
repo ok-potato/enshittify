@@ -1,21 +1,20 @@
 package com.resources
 
-import com.models.*
+import com.models.ReleaseInfo
+import com.models.ReleaseInfoBuilder
+import com.models.serialize
 import com.releaseBaseUrl
 import com.releasesBasePath
 import com.util.saveJpeg
 import com.util.saveMp3
 import io.ktor.http.content.*
-import io.ktor.server.html.*
 import io.ktor.util.logging.*
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insertIgnore
-import org.jetbrains.exposed.sql.mergeFrom
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
+import java.sql.DriverManager
 import java.util.*
+import org.jooq.impl.DSL
+import generated.jooq.tables.references.*
+import org.jooq.SQLDialect
 
 val log = KtorSimpleLogger("Upload")
 
@@ -46,22 +45,11 @@ suspend fun MultiPartData.uploadRelease(): String {
     val allArtists = (releaseInfo.tracks.flatMap { it.artists } + releaseInfo.artists).toSet()
 
     // TODO sql
-    transaction {
-        sql("")
-        ReleaseFeaturesTable.mergeFrom(ArtistsTable) {
-            whenMatchedUpdate {  }
-            whenNotMatchedInsert {  }
-        }
-
-        releaseInfo.artists
-    }
 
     File("$path/info.json").writeText(infoBuilder().serialize(ReleaseInfo::class))
 
     return url
 }
-
-fun Transaction.sql(statement: String) = TransactionManager.current().exec(statement)
 
 const val artistPrefix = "artist-"
 const val trackNamePrefix = "track-name-"
@@ -118,4 +106,15 @@ fun releaseUUID(): UUID {
         }
     }
     error("Couldn't find a unique ID for the release. This is likely due to a bug on the server.")
+}
+
+fun main() {
+    DriverManager.getConnection("jdbc:postgresql://localhost:5432/enshittify", "postgres", "1234").use {
+        val context = DSL.using(it, SQLDialect.POSTGRES)
+        val result = context.select().from(ARTISTS).fetch()
+
+        for (record in result) {
+            println("${record.getValue(ARTISTS.ID)} ${record.getValue(ARTISTS.NAME)}")
+        }
+    }
 }

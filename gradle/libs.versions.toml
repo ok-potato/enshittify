@@ -6,6 +6,7 @@ kotlin-version = "2.1.0"
 ktor-version = "3.0.2"
 
 [plugins]
+jooq-codegen-gradle = { id = "org.jooq.jooq-codegen-gradle", version.ref = "jooq-version" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
@@ -16,7 +17,11 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "e
 jave = { module = "ws.schild:jave-core", version.ref = "jave-version" }
 jave-native-linux = { module = "ws.schild:jave-nativebin-linux64", version.ref = "jave-version" }
 jave-native-win = { module = "ws.schild:jave-nativebin-win64", version.ref = "jave-version" }
+
 jooq = { module = "org.jooq:jooq", version.ref = "jooq-version" }
+jooq-codegen = { module = "org.jooq:jooq-codegen", version.ref = "jooq-version" }
+jooq-meta = { module = "org.jooq:jooq-meta", version.ref = "jooq-version" }
+
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version = "1.5.15" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version = "1.15.2" }
