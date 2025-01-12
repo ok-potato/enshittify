@@ -62,7 +62,7 @@ fun Application.configureRouting() {
             call.respondHtml { uploadForm() }
         }
 
-        // TODO rate limit
+        // TODO could use rate limiting
         post("/upload") {
             val releasePageUrl = call.receiveMultipart().uploadRelease()
             call.respondRedirect(releasePageUrl)

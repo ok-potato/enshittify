@@ -17,7 +17,7 @@ import kotlin.io.path.name
 
 private const val coverUri = "cover.jpg"
 
-// TODO do some caching here or something idk lol
+// TODO could use caching
 suspend fun fetchReleaseInfo(releaseId: String): ReleaseInfo {
     val releaseInfo = withContext(Dispatchers.IO) {
         File("$releasesBasePath/$releaseId/info.json").readText()
@@ -27,21 +27,25 @@ suspend fun fetchReleaseInfo(releaseId: String): ReleaseInfo {
 }
 
 suspend fun fetchAllReleaseInfo(): Map<String, ReleaseInfo> {
-    return coroutineScope {
-        Path(releasesBasePath).listDirectoryEntries("*").map { path ->
-            val releaseId = path.name
-            async {
-                try {
-                    releaseId to fetchReleaseInfo(releaseId)
-                } catch (exception: Exception) {
-                    log.debug("Failed to fetch release info for $releaseId")
-                    if (log.isTraceEnabled) {
-                        exception.printStackTrace()
+    try {
+        return coroutineScope {
+            Path(releasesBasePath).listDirectoryEntries("*").map { path ->
+                val releaseId = path.name
+                async {
+                    try {
+                        releaseId to fetchReleaseInfo(releaseId)
+                    } catch (exception: Exception) {
+                        log.debug("Failed to fetch release info for $releaseId")
+                        if (log.isTraceEnabled) {
+                            exception.printStackTrace()
+                        }
+                        null
                     }
-                    null
                 }
-            }
-        }.awaitAll().filterNotNull().toMap()
+            }.awaitAll().filterNotNull().toMap()
+        }
+    } catch (exception: Exception) {
+        return mapOf()
     }
 }
 

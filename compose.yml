@@ -1,0 +1,11 @@
+# after updating the server, run:
+# > gradle buildFatJar
+# > docker-compose up -d app
+
+services:
+    app:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8080"

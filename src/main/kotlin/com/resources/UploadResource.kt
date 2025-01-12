@@ -14,6 +14,7 @@ import java.util.*
 
 val log = KtorSimpleLogger("Upload")
 
+// TODO persistence of content + meta-info is done via files - this will have to do for now
 suspend fun MultiPartData.uploadRelease(): String {
     val uuid = releaseUUID()
     val path = "$releasesBasePath/$uuid"

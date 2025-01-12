@@ -10,7 +10,7 @@ data class ReleaseInfo(
 
 data class Track(
     val title: String? = null,
-    val artists: List<String>, // TODO this can currently not be specified in the upload form
+    val artists: List<String>, // TODO can't currently be specified in the upload form
     val length: Int
 ): Json
 
